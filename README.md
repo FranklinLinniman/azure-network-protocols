@@ -31,7 +31,7 @@ In this tutorial, we observe various network traffic to and from Azure Virtual M
 <h2>Actions and Observations</h2>
 
 <p>
-<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://i.imgur.com/qbHLNi3.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 <p>
  1. Create some sample file shares with various permissions
@@ -54,7 +54,7 @@ In this tutorial, we observe various network traffic to and from Azure Virtual M
 <br />
 
 <p>
-<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://i.imgur.com/3sU0Dgs.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 <p>
 2. Attempt to access file shares as a normal user
@@ -66,7 +66,7 @@ In this tutorial, we observe various network traffic to and from Azure Virtual M
 <br />
 
 <p>
-<img src="https://i.imgur.com/DJmEXEB.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://i.imgur.com/RP437Pz.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 <p>
 3. Create an “ACCOUNTANTS” Security Group, assign permissions, and test access
