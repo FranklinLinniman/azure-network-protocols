@@ -23,10 +23,11 @@ In this tutorial, we observe various network traffic to and from Azure Virtual M
 
 <h2>High-Level Steps</h2>
 
-- Create file shares with various permissions
-- Attempt to access the files as a normal user
-- Create a security group
-- Assign permissions and test your accounts
+- Observe ICMP traffic
+- Observe SSH traffic
+- Observe DHCP traffic 
+- Observe DNS traffic 
+- Observe RDP traffic 
 
 <h2>Actions and Observations</h2>
 
@@ -34,22 +35,32 @@ In this tutorial, we observe various network traffic to and from Azure Virtual M
 <img src="https://i.imgur.com/qbHLNi3.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 <p>
- 1. Create some sample file shares with various permissions
+1. Observe ICMP Traffic
 <br>
--Connect/log into DC-1 as your domain admin account (mydomain.com\jane_admin)
+-Use Remote Desktop to connect to your Windows 10 Virtual Machine
 <br>
--Connect/log into Client-1 as a normal user (mydomain\<someuser>)
+-Within your Windows 10 Virtual Machine, Install Wireshark
 <br>
--On DC-1, on the C:\ drive, create 4 folders: “read-access”, “write-access”, “no-access”, “accounting”
+-Open Wireshark and filter for ICMP traffic only
 <br>
--Set the following permissions (share the folder) for the “Domain Users” group:
+-Retrieve the private IP address of the Ubuntu VM and attempt to ping it from within the Windows 10 VM
 <br>
--Folder: “read-access”, Group: “Domain Users”, Permission: “Read”
+-Observe ping requests and replies within WireShark
 <br>
--Folder: “write-access”,  Group: “Domain Users”, Permissions: “Read/Write”
+-From The Windows 10 VM, open command line or PowerShell and attempt to ping a public website (such as www.google.com) and observe the traffic in WireShark
 <br>
--Folder: “no-access”, Group: “Domain Admins”, “Permissions: “Read/Write”
-(Skip accounting for now)
+-Initiate a perpetual/non-stop ping from your Windows 10 VM to your Ubuntu VM
+<br>
+-Open the Network Security Group your Ubuntu VM is using and disable incoming (inbound) ICMP traffic
+<br>
+-Back in the Windows 10 VM, observe the ICMP traffic in WireShark and the command line Ping activity
+<br>
+-Re-enable ICMP traffic for the Network Security Group your Ubuntu VM is using
+<br>
+-Back in the Windows 10 VM, observe the ICMP traffic in WireShark and the command line Ping activity (should start working)
+<br>
+-Stop the ping activity
+
 </p>
 <br />
 
@@ -57,11 +68,16 @@ In this tutorial, we observe various network traffic to and from Azure Virtual M
 <img src="https://i.imgur.com/3sU0Dgs.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 <p>
-2. Attempt to access file shares as a normal user
+2. Observe SSH Traffic
 <br>
--On Client-1, navigate to the shared folder (start, run, \\dc-1)
+-Back in Wireshark, filter for SSH traffic only
 <br>
--Try to access the folders you just created. Which folders can you access? Which folders can you create stuff in? Does it make sense?
+-From your Windows 10 VM, “SSH into” your Ubuntu Virtual Machine (via its private IP address)
+<br>
+-Type commands (username, pwd, etc) into the linux SSH connection and observe SSH traffic spam in WireShark
+<br>
+-Exit the SSH connection by typing ‘exit’ and pressing [Enter]
+
 </p>
 <br />
 
@@ -69,20 +85,40 @@ In this tutorial, we observe various network traffic to and from Azure Virtual M
 <img src="https://i.imgur.com/RP437Pz.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 <p>
-3. Create an “ACCOUNTANTS” Security Group, assign permissions, and test access
+1. Observe DHCP Traffic
 <br>
--Go back to DC-1, in Active Directory, create a security group called “ACCOUNTANTS”
+-Back in Wireshark, filter for DHCP traffic only
 <br>
--On the “accounting” folder you created earlier, set the following permissions:
+-From your Windows 10 VM, attempt to issue your VM a new IP address from the command line (ipconfig /renew)
 <br>
--Folder: “accounting”, Group: “ACCOUNTANTS”, Permissions: “Read/Write”
+-Observe the DHCP traffic appearing in WireShark
+</p>
+<br />
+
+<p>
+<img src="https://i.imgur.com/RP437Pz.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+</p>
+<p>
+1. Observe DNS Traffic
 <br>
--On Client-1, as  <someuser>, try to access the accountants folder. It should fail. 
+-Back in Wireshark, filter for DNS traffic only
 <br>
--Log out of Client-1 as  <someuser>
+-From your Windows 10 VM within a command line, use nslookup to see what google.com and disney.com’s IP addresses are
 <br>
--On DC-1, make <someuser> a member of the “ACCOUNTANTS”  Security Group
+-Observe the DNS traffic being show in WireShark
+</p>
+<br />
+
+<p>
+<img src="https://i.imgur.com/RP437Pz.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+</p>
+<p>
+1. Observe RDP Traffic
 <br>
--Sign back into Client-1 as <someuser> and try to access the “accounting” share in \\DC-1\ - Does it work now?
+-Back in Wireshark, filter for RDP traffic only (tcp.port == 3389)
+<br>
+-Oserve the immediate non-stop spam of traffic? Why do you think it’s non-stop spamming vs only showing traffic when you do an activity?
+<br>
+-Answer: because the RDP (protocol) is constantly showing you a live stream from one computer to another, therefor traffic is always being transmitted
 </p>
 <br />
