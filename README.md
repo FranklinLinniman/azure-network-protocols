@@ -117,7 +117,7 @@ In this tutorial, we observe various network traffic to and from Azure Virtual M
 <br>
 -Back in Wireshark, filter for RDP traffic only (tcp.port == 3389)
 <br>
--Oserve the immediate non-stop spam of traffic? Why do you think it’s non-stop spamming vs only showing traffic when you do an activity?
+-Oserve the immediate non-stop spam of traffic. This is occuring because we are using Remote Desktop Protocol to connect to our virtual machines.
 <br>
 -Answer: because the RDP (protocol) is constantly showing you a live stream from one computer to another, therefor traffic is always being transmitted
 </p>
